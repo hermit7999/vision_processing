@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "vision_test",
+			"path": "pythonProject/vision_test"
+		}
+	],
+	"settings": {}
+}
