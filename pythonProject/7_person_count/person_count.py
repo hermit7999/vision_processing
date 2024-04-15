@@ -4,10 +4,10 @@ import cvzone
 import math
 # from sort import*
 
-# cap  = cv2.VideoCapture(0)
-# cap.set(3, 1280)
-# cap.set(4,720)
-cap = cv2.VideoCapture("D:/Python_practices/vision_processing/pythonProject/video/WalkOnRome.mp4")
+cap  = cv2.VideoCapture(0)
+cap.set(3, 1280)
+cap.set(4,720)
+# cap = cv2.VideoCapture("D:/Python_practices/vision_processing/pythonProject/video/WalkOnRome.mp4")
 
 model = YOLO("../Yolo-Weights/yolov8l.pt")
 
@@ -22,13 +22,13 @@ className = ['person','bicycle','car','motorcycle','airplane','bus','train','tru
  'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
  'scissors', 'teddy bear', 'toothbrush', 'hair drier']
 
-mask = cv2.imread("mask.png")
+# mask = cv2.imread("mask.png")
 
 while True:
     success, img = cap.read()
-    imgRegion = cv2.bitwise_and(img,mask)
+    # imgRegion = cv2.bitwise_and(img,mask)
 
-    results = model(imgRegion, stream=True) 
+    results = model(img, stream=True) 
 
     # detections = np.empty((0,5))
     for r in results:
@@ -45,12 +45,12 @@ while True:
             # print(conf)
             cls = int(box.cls[0])
             # cvzone.putTextRect(img, f'{conf}',(max(0,x1),max(35,y1-20)))
-            # cvzone.putTextRect(img, f'{className[cls]} {conf}',(max(0,x1),max(35,y1-20)), scale=3, thickness = 1)
+            cvzone.putTextRect(img, f'{className[cls]} {conf}',(max(0,x1),max(35,y1-20)), scale=3, thickness = 1)
 
-            currentClass = className[cls]
-            if currentClass == "person" and conf >= 0.3:
-                cvzone.putTextRect(img, f'{className[cls]} {conf}',(max(0,x1),max(35,y1-20)), scale=3, thickness = 1, offset = 3)
-                cvzone.cornerRect(img,(x1,y1,w,h),l=9)
+            # currentClass = className[cls]
+            # if currentClass == "person" and conf >= 0.3:
+            #     cvzone.putTextRect(img, f'{className[cls]} {conf}',(max(0,x1),max(35,y1-20)), scale=3, thickness = 1, offset = 3)
+            #     cvzone.cornerRect(img,(x1,y1,w,h),l=9)
 
                 # currentArray = np.array([x1, y2,x2,y2,conf])
                 # detections = np.vstack((detections, currentArray))
@@ -61,5 +61,5 @@ while True:
     #     print(result)
 
     cv2.imshow("Image", img)
-    cv2.imshow("Image", imgRegion)
+    # cv2.imshow("Image", imgRegion)
     cv2.waitKey(1)
